@@ -17,21 +17,25 @@ public class EmployeeController {
     }
 
     @GetMapping("/employees")
-    public ArrayList<Employee> getAllEmployees() {
-        ArrayList<Employee> vals = new ArrayList<>(map.values());
-        return vals;
-
-    }
-    @GetMapping("/employees/by-name")
-    public ResponseEntity<Employee> getEmployeeByName(@RequestParam(value = "name") String employeeName) {
-        for (Employee emp : map.values()) {
-            if (emp.getEmployeeName().equals(employeeName)) {
-                return ResponseEntity.ok(emp);
-            }
+    public ResponseEntity<ArrayList<Employee>>getAllEmployees(@RequestParam(value = "name",required = false) String employeeName) {
+        if(employeeName == null || employeeName.equals("")) {
+            ArrayList<Employee> employees = new ArrayList<>(map.values());
+            return ResponseEntity.ok(employees);
         }
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-    }
+        else{
+            boolean isEmpExist = false;
+            ArrayList<Employee> specificEmployees = new ArrayList<>();
+            for(Employee emp : map.values()){
+                if(emp.getEmployeeName().equals(employeeName)){
+                    specificEmployees.add(emp);
+                    isEmpExist = true;
+                }
+            }
+            if(isEmpExist == true) return ResponseEntity.ok(specificEmployees);
+            else return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
 
+    }
 
     @GetMapping("/employees/{employeeId}")
     public ResponseEntity<Employee> getEmployeeById(@PathVariable String employeeId) {

@@ -7,8 +7,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import java.util.ArrayList;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 class EmployeeManagementSystemApplicationTests {
@@ -35,6 +36,30 @@ class EmployeeManagementSystemApplicationTests {
 		assertEquals("sai",response.getBody().getEmployeeName());
 	}
 
+	@Test
+	public void testGetAllEmployees_ReturnsOkResponseCode(){
+		ResponseEntity<ArrayList<Employee>> response = employeeController.getAllEmployees(null);
+			assertEquals(HttpStatus.OK,response.getStatusCode());
+	}
+	@Test
+	public void testGetAllEmployees_ReturnsNotFoundResponseCode(){
+		ResponseEntity<ArrayList<Employee>> response = employeeController.getAllEmployees("charan");
+		assertEquals(HttpStatus.NOT_FOUND,response.getStatusCode());
+	}
+	@Test
+	public void testGetAllEmployees_ReturnsValidEmployeesSize(){
+		ResponseEntity<Employee> emp1 = employeeController.postEmployee(new Employee("I2","sai","28282","Manager"));
+		ResponseEntity<Employee> emp2 = employeeController.postEmployee(new Employee("I3","charan","28282","Manager"));
+		ResponseEntity<ArrayList<Employee>> response = employeeController.getAllEmployees("sai");
+		assertEquals(2,response.getBody().size());
+	}
+	@Test
+	public void testGetAllEmployees_ReturnsInvalidEmployeesSize(){
+		ResponseEntity<Employee> emp1 = employeeController.postEmployee(new Employee("I2","sai","28282","Manager"));
+		ResponseEntity<Employee> emp2 = employeeController.postEmployee(new Employee("I3","charan","28282","Manager"));
+		ResponseEntity<ArrayList<Employee>> response = employeeController.getAllEmployees("charan");
+		assertNotEquals(2,response.getBody().size());
+	}
 	@Test
 	public  void testAddEmployee_ReturnsCorrectEmployee(){
 		ResponseEntity<Employee> newEmp = employeeController.postEmployee(new Employee("I2","charan","7847","CEO"));
