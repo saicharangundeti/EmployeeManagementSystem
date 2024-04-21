@@ -68,7 +68,7 @@ public class EmployeeController {
         return ResponseEntity.ok(update);
 
     }
-    @DeleteMapping("/employees/by-name")
+    @DeleteMapping("/employees")
     public ResponseEntity<Boolean> deleteEmployeeByName(@RequestParam(value = "name") String employeeName){
         for(Employee emp : map.values()){
             if(emp.getEmployeeName().equals(employeeName)){
