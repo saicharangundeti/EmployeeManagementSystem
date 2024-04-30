@@ -41,6 +41,7 @@ class EmployeeManagementSystemApplicationTests {
 		ResponseEntity<ArrayList<Employee>> response = employeeController.getAllEmployees(null);
 			assertEquals(HttpStatus.OK,response.getStatusCode());
 	}
+	// non existing name
 	@Test
 	public void testGetAllEmployees_ReturnsNotFoundResponseCode(){
 		ResponseEntity<ArrayList<Employee>> response = employeeController.getAllEmployees("charan");
@@ -50,7 +51,7 @@ class EmployeeManagementSystemApplicationTests {
 	public void testGetAllEmployees_ReturnsValidEmployeesSize(){
 		ResponseEntity<Employee> emp1 = employeeController.postEmployee(new Employee("I2","sai","28282","Manager"));
 		ResponseEntity<Employee> emp2 = employeeController.postEmployee(new Employee("I3","charan","28282","Manager"));
-		ResponseEntity<ArrayList<Employee>> response = employeeController.getAllEmployees("sai");
+		ResponseEntity<ArrayList<Employee>> response = employeeController.getAllEmployees("charan");
 		assertEquals(2,response.getBody().size());
 	}
 	@Test

@@ -10,12 +10,6 @@ import java.util.*;
 public class EmployeeController {
     Map<String, Employee> map = new HashMap<>();
 
-
-    @GetMapping("/greet")
-    public String greet_message() {
-        return "Hello this is my employee api";
-    }
-
     @GetMapping("/employees")
     public ResponseEntity<ArrayList<Employee>>getAllEmployees(@RequestParam(value = "name",required = false) String employeeName) {
         if(employeeName == null || employeeName.equals("")) {
@@ -23,15 +17,13 @@ public class EmployeeController {
             return ResponseEntity.ok(employees);
         }
         else{
-            boolean isEmpExist = false;
             ArrayList<Employee> specificEmployees = new ArrayList<>();
             for(Employee emp : map.values()){
                 if(emp.getEmployeeName().equals(employeeName)){
                     specificEmployees.add(emp);
-                    isEmpExist = true;
                 }
             }
-            if(isEmpExist == true) return ResponseEntity.ok(specificEmployees);
+            if(specificEmployees.size() > 0) return ResponseEntity.ok(specificEmployees);
             else return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
 
