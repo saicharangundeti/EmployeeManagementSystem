@@ -1,27 +1,25 @@
 package com.EmployeeManagementSystem.model;
 
 public class Employee {
-    private String employeeId;
+    private int employeeId;
     private String employeeName;
     private String employeePhoneNo;
     private String employeeDesignation;
 
-    public Employee() {
-    }
 
 
-    public Employee(String employeeId, String employeeName, String employeePhoneNo, String employeeDesignation) {
+    public Employee(int employeeId, String employeeName, String employeePhoneNo, String employeeDesignation) {
         this.employeeId = employeeId;
         this.employeeName = employeeName;
         this.employeePhoneNo = employeePhoneNo;
         this.employeeDesignation = employeeDesignation;
     }
 
-    public String getEmployeeId() {
+    public int getEmployeeId() {
         return employeeId;
     }
 
-    public void setEmployeeId(String employeeId) {
+    public void setEmployeeId(int employeeId) {
         this.employeeId = employeeId;
     }
 
